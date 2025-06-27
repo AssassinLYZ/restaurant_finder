@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": ["jest", "node", "jest-environment-jsdom"],
+    "noEmit": true,
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "paths": {
+      "src/*": ["src/*"],
+      "@/*": ["src/*"]
+    },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*",
+  ],
+  "exclude": [
+    "node_modules", "**/*.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
