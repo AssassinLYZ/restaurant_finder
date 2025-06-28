@@ -15,6 +15,7 @@ export default function Collection() {
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('accessToken')
     navigate('/main');
   };
   return (

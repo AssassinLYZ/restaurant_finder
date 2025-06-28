@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FILTERS, SORT_SELECT_OPTIONS } from '../../constant/restaurant';
+import { FILTERS, PAGE_SIZE, SORT_SELECT_OPTIONS } from '../../constant/restaurant';
 
 import type { Restaurant, RestaurantSearchResponse } from '../../types/restaurants';
 
@@ -42,7 +42,7 @@ const initialState: RestaurantsState = {
   },
   pagination: {
     currentPage: 1,
-    pageSize: 18,
+    pageSize: PAGE_SIZE
   },
 
   loading: false,
@@ -59,7 +59,9 @@ const slice = createSlice({
       state.postcode = action.payload;
     },
     fetchSuccess(state, action: PayloadAction<RestaurantSearchResponse>) {
-      state.data = action.payload.restaurants;
+      if (Array.isArray(action.payload.restaurants)){
+        state.data = action.payload.restaurants;
+      }
       state.loading = false;
     },
     fetchFailure(state, action: PayloadAction<string>) {

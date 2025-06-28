@@ -52,7 +52,7 @@ export default function MainPage() {
       <Title>{filteredRestaurants.length} Restaurants in total </Title>
       {loading && <Loading fullScreen />}
 
-      {!loading && <RestaurantList restaurants={paginatedRestaurants} />}
+      {!loading && <RestaurantList restaurants={paginatedRestaurants} pageSize={pagination.pageSize} currentPage={pagination.currentPage}/>}
 
       {!loading && data.length !== 0 && filteredRestaurants.length === 0 && (
         <EmptyList

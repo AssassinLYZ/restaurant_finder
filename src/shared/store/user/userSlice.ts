@@ -17,10 +17,11 @@ const loadInitialState = (): AuthState => {
   if (typeof window !== 'undefined') {
     try {
       const user = localStorage.getItem('user');
+      const access_token = localStorage.getItem('accessToken');
       const collected = localStorage.getItem('collectedRestaurants');
       return {
         user: user ? JSON.parse(user) : null,
-        isAuthenticated: !!user,
+        isAuthenticated: !!access_token,
         collectedRestaurants: collected ? JSON.parse(collected) : {},
       };
     } catch (error) {

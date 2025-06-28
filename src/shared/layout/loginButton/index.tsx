@@ -26,7 +26,7 @@ export const LoginButton: React.FC = () => {
 
   return (
     <>
-      <ButtonWrapper onClick={() => setIsDrawerOpen(true)}>
+      <ButtonWrapper data-testid='header-login' onClick={() => setIsDrawerOpen(true)}>
         <span>Login</span>
       </ButtonWrapper>
 

@@ -83,7 +83,7 @@ export default function RestaurantDetail({ restaurant }:RestaurantDetailProps)  
   if (!restaurant) return null;
 
   return (
-    <>
+    <div data-testid='restaurant-detail'>
       <Title>
         <Name>{restaurant.name || 'Restaurant'}</Name>
         <CollectButton
@@ -115,7 +115,7 @@ export default function RestaurantDetail({ restaurant }:RestaurantDetailProps)  
         </Info>
       </Header>
 
-      <MapSection>
+      <MapSection data-testid='restaurant-map'>
         <RestaurantDetailsMap restaurant={restaurant} height="300px" />
       </MapSection>
 
@@ -152,6 +152,6 @@ export default function RestaurantDetail({ restaurant }:RestaurantDetailProps)  
           </DeliveryInfo>
         </Section>
       </Details>
-    </>
+    </div>
   );
 };

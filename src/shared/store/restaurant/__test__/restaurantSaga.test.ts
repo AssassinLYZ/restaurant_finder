@@ -1,7 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { getRestaurantsByPostcode } from 'src/shared/api/restaurants';
-import { mockRestaurantsResponse } from 'src/shared/__mock__/restaurantMock';
+import { RestaurantSearchResponse } from 'src/shared/types/restaurants';
+import * as mockRestaurantsResponse from 'src/shared/__mock__/restaurantMock.json';
 
 import { fetchStart, fetchSuccess, fetchFailure } from '../restaurantsSlice';
 import { watchFetchRestaurants, fetchRestaurantsSaga } from '../restaurantsSaga';
@@ -25,8 +26,8 @@ describe('Restaurants Sagas', () => {
       expect(generator.next().value).toEqual(call(getRestaurantsByPostcode, mockPostcode));
 
       // Step 2: Should dispatch success action with response
-      expect(generator.next(mockRestaurantsResponse).value).toEqual(
-        put(fetchSuccess(mockRestaurantsResponse))
+      expect(generator.next(mockRestaurantsResponse as unknown as RestaurantSearchResponse ).value).toEqual(
+        put(fetchSuccess(mockRestaurantsResponse as unknown as RestaurantSearchResponse ))
       );
 
       // Saga should be done

@@ -1,0 +1,175 @@
+{
+  "mockRestaurantsResponse": {
+    "metaData": {
+      "canonicalName": "n1-london",
+      "district": "N1",
+      "postalCode": "N16XY",
+      "area": "London",
+      "location": {
+        "type": "Point",
+        "coordinates": [-0.1, 51.5]
+      },
+      "cuisineDetails": [
+        { "name": "Pizza", "uniqueName": "pizza", "count": 25 },
+        { "name": "Sushi", "uniqueName": "sushi", "count": 15 }
+      ],
+      "resultCount": 40,
+      "searchedTerms": null,
+      "tagDetails": [{ "displayName": "Popular", "key": "popular", "priority": 100 }],
+      "deliveryArea": "N1"
+    },
+    "restaurants": [
+      {
+        "id": "1001",
+        "name": "Pizza Palace",
+        "uniqueName": "pizza-palace-london-n1",
+        "address": {
+          "city": "London",
+          "firstLine": "123 High Street",
+          "postalCode": "N16XY",
+          "location": {
+            "type": "Point",
+            "coordinates": [-0.1, 51.5]
+          }
+        },
+        "rating": { "count": 120, "starRating": 4.5, "userRating": null },
+        "isNew": false,
+        "driveDistanceMeters": 500,
+        "openingTimeLocal": "2025-06-09T11:00:00",
+        "deliveryOpeningTimeLocal": "2025-06-08T11:00:00",
+        "deliveryEtaMinutes": { "rangeLower": 30, "rangeUpper": 45 },
+        "isCollection": true,
+        "isDelivery": true,
+        "isOpenNowForCollection": true,
+        "isOpenNowForDelivery": true,
+        "isTemporarilyOffline": false,
+        "deliveryCost": 1.99,
+        "minimumDeliveryValue": 15,
+        "defaultDisplayRank": 0,
+        "logoUrl": "https://example.com/pizza.jpg",
+        "deals": [{ "description": "20% off", "offerType": "Percent" }],
+        "cuisines": [
+          { "name": "Pizza", "uniqueName": "pizza" },
+          { "name": "Italian", "uniqueName": "italian" }
+        ],
+        "availability": {
+          "delivery": {
+            "isOpen": true,
+            "etaMinutes": { "rangeLower": 30, "rangeUpper": 45 },
+            "canPreOrder": false,
+            "isTemporarilyOffline": false
+          },
+          "collection": {
+            "isOpen": true,
+            "etaMinutes": { "approximate": 15 },
+            "canPreOrder": false,
+            "isTemporarilyOffline": false
+          }
+        },
+        "isOpenNowForPreorder": false,
+        "isTemporaryBoost": false,
+        "isPremier": false,
+        "isTestRestaurant": false,
+        "tags": []
+      },
+      {
+        "id": "1002",
+        "name": "Sushi Express",
+        "uniqueName": "sushi-express-london-n1",
+        "address": {
+          "city": "London",
+          "firstLine": "456 Main Road",
+          "postalCode": "N16XZ",
+          "location": {
+            "type": "Point",
+            "coordinates": [-0.09, 51.51]
+          }
+        },
+        "rating": { "count": 85, "starRating": 4.0, "userRating": null },
+        "isNew": true,
+        "driveDistanceMeters": 800,
+        "openingTimeLocal": "2025-06-09T12:00:00",
+        "deliveryOpeningTimeLocal": "2025-06-08T12:00:00",
+        "deliveryEtaMinutes": { "rangeLower": 20, "rangeUpper": 35 },
+        "isCollection": false,
+        "isDelivery": true,
+        "isOpenNowForDelivery": true,
+        "isTemporarilyOffline": false,
+        "deliveryCost": 2.5,
+        "minimumDeliveryValue": 20,
+        "defaultDisplayRank": 1,
+        "logoUrl": "https://example.com/sushi.jpg",
+        "deals": [],
+        "cuisines": [
+          { "name": "Sushi", "uniqueName": "sushi" },
+          { "name": "Japanese", "uniqueName": "japanese" }
+        ],
+        "availability": {
+          "delivery": {
+            "isOpen": true,
+            "etaMinutes": { "rangeLower": 20, "rangeUpper": 35 },
+            "canPreOrder": false,
+            "isTemporarilyOffline": false
+          }
+        },
+        "isOpenNowForCollection": false,
+        "isOpenNowForPreorder": false,
+        "isTemporaryBoost": false,
+        "isPremier": false,
+        "isTestRestaurant": false,
+        "tags": []
+      }
+    ],
+    "deliveryFees": {
+      "restaurants": {
+        "1001": {
+          "restaurantId": "1001",
+          "minimumOrderValue": 1500,
+          "bands": [{ "minimumAmount": 1500, "fee": 199 }]
+        },
+        "1002": {
+          "restaurantId": "1002",
+          "minimumOrderValue": 2000,
+          "bands": [{ "minimumAmount": 2000, "fee": 250 }]
+        }
+      }
+    },
+    "filters": {
+      "pizza": {
+        "displayName": "Pizza",
+        "restaurantIds": ["1001", "1003", "1005"],
+        "imageName": "",
+        "group": ""
+      },
+      "sushi": {
+        "displayName": "Sushi",
+        "restaurantIds": ["1002", "1004"],
+        "imageName": "",
+        "group": ""
+      }
+    },
+    "layout": {
+      "search-refine-filters": {
+        "id": "search-refine-filters",
+        "title": "Refine Filters",
+        "type": "list",
+        "contents": [
+          { "type": "filter", "id": "with_discounts", "title": "Deals" },
+          { "type": "filter", "id": "free_delivery", "title": "Free Delivery" }
+        ]
+      },
+      "search-filter-carousel": {
+        "id": "search-filter-carousel",
+        "title": "Filter Carousel",
+        "type": "list",
+        "contents": [
+          { "type": "filter", "id": "pizza", "title": "Pizza" },
+          { "type": "filter", "id": "sushi", "title": "Sushi" }
+        ]
+      }
+    },
+    "enrichedLists": {
+      "trackingId": { "trackingId": "Mock Tracking List" }
+    }
+  }
+}

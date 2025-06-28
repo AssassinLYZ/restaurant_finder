@@ -26,12 +26,14 @@ interface RestaurantCardProps {
   readonly restaurant: Restaurant;
   readonly className?: string;
   readonly onClick?: () => void;
+  'data-testid': string;
 }
 
 export default function RestaurantCard({
   restaurant,
   onClick,
   className = '',
+  'data-testid': testId
 }: Readonly<RestaurantCardProps>) {
   const handleClick = () => {
     onClick?.();
@@ -66,6 +68,7 @@ export default function RestaurantCard({
   return (
     <>
       <CardContainer
+         data-testid={testId}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         className={className}
@@ -85,7 +88,7 @@ export default function RestaurantCard({
           <InfoPair>
             <Rating>
               <StarIcon>★</StarIcon>
-              <RatingValue>{restaurant.rating?.starRating?.toFixed(1)}</RatingValue>
+              <RatingValue data-testid='rating'>{restaurant.rating?.starRating?.toFixed(1)}</RatingValue>
               <RatingCount>({restaurant.rating?.count}+)</RatingCount>
             </Rating>
             <Cuisines>

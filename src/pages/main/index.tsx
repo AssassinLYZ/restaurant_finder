@@ -36,7 +36,7 @@ export default function Main() {
       <Description>You could select one postcode from the list below.</Description>
       <PostcodeGrid>
         {POSTCODE.map((code) => (
-          <PostcodeButton key={code} type="button" onClick={() => handlePostcodeClick(code)}>
+          <PostcodeButton data-testid="postcode-button" key={code} type="button" onClick={() => handlePostcodeClick(code)}>
             {code}
           </PostcodeButton>
         ))}

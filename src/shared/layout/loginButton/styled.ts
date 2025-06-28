@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Input from 'src/shared/components/input';
-import { Button } from 'src/shared/components/button';
+import  Button  from 'src/shared/components/button';
 
 export const StyledButton = styled(Button)`
   align-self: center;

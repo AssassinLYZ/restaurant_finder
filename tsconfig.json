@@ -35,9 +35,10 @@
     "**/*.ts",
     "**/*.tsx",
     "src/**/*",
+    "e2e/**/*"
   ],
   "exclude": [
-    "node_modules", "**/*.spec.ts"
+    "node_modules",
   ],
   "references": [
     {

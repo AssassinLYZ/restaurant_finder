@@ -13,7 +13,7 @@ export const selectFilteredRestaurants = createSelector(
   [selectRawData, selectFilters],
   (data, filters) => {
     // title filter
-    const textFiltered = data.filter((restaurant: Restaurant) =>
+    const textFiltered = data?.filter((restaurant: Restaurant) =>
       restaurant.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
     );
 
@@ -25,27 +25,27 @@ export const selectFilteredRestaurants = createSelector(
     const filtered =
       activeFilterIds.length > 0
         ? textFiltered.filter((restaurant: Restaurant) => {
-            return activeFilterIds.every((filterId) => {
-              switch (filterId) {
-                case 'with_discounts':
-                  return restaurant.deals.length == 0;
-                case 'free_delivery':
-                  return restaurant.deliveryCost == 0;
-                case 'four_star':
-                  return restaurant.rating.starRating >= 4;
-                case 'open_now':
-                  return restaurant.isOpenNowForDelivery;
-                case 'collection':
-                  return restaurant.isCollection;
-                case 'new':
-                  return restaurant.isNew;
-                default:
-                  return true;
-              }
-            });
-          })
+          return activeFilterIds.every((filterId) => {
+            switch (filterId) {
+              case 'with_discounts':
+                return restaurant.deals.length == 0;
+              case 'free_delivery':
+                return restaurant.deliveryCost == 0;
+              case 'four_star':
+                return restaurant.rating.starRating >= 4;
+              case 'open_now':
+                return restaurant.isOpenNowForDelivery;
+              case 'collection':
+                return restaurant.isCollection;
+              case 'new':
+                return restaurant.isNew;
+              default:
+                return true;
+            }
+          });
+        })
         : textFiltered;
-
+    if (!filtered) return []
     // sroting
     return [...filtered].sort((a, b) => {
       switch (filters.sortBy) {

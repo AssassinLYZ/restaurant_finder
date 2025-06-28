@@ -6,6 +6,7 @@ export const getRestaurantsByPostcode = async (
   postcode: string
 ): Promise<RestaurantSearchResponse> => {
   const response = await http.get(`/discovery/uk/restaurants/enriched/bypostcode/${postcode}`);
+  console.log(response)
   return response.data;
 };
 

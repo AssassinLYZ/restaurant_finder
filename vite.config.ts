@@ -2,7 +2,8 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const PORT = 5176;
+export const PORT = 5176;
+
 export default defineConfig({
   plugins: [react()],
   server: {

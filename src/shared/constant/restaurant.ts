@@ -33,3 +33,5 @@ export const POSTCODE = [
   'DH45QZ',
   'BT71NN',
 ];
+
+export const PAGE_SIZE = 18

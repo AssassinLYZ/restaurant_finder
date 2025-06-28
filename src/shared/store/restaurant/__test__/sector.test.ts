@@ -1,4 +1,5 @@
-import { mockRestaurantsResponse } from 'src/shared/__mock__/restaurantMock';
+import { Restaurant } from 'src/shared/types/restaurants';
+import * as mockdata  from 'src/shared/__mock__/restaurantMock.json';
 
 import { RootState } from '../../store';
 import {
@@ -9,8 +10,9 @@ import {
 
 describe('restaurants selectors', () => {
   const initialState: RootState = {
+    user:{isAuthenticated:false, collectedRestaurants:{},user:{email:'', password:''}},
     restaurants: {
-      data: mockRestaurantsResponse.restaurants,
+      data: mockdata.mockRestaurantsResponse.restaurants as unknown as Restaurant[],
       filters: {
         searchQuery: '',
         activeFilters: {
@@ -37,7 +39,7 @@ describe('restaurants selectors', () => {
   describe('selectFilteredRestaurants', () => {
     it('should return all restaurants when no filters applied', () => {
       const result = selectFilteredRestaurants(initialState);
-      expect(result).toEqual(mockRestaurantsResponse.restaurants);
+      expect(result).toEqual(mockdata.mockRestaurantsResponse.restaurants);
     });
 
     it('should filter by search query', () => {

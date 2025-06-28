@@ -18,13 +18,13 @@ export default function ErrorPage({
 
   return (
     <ErrorContainer>
-      <ErrorCode>{errorCode}</ErrorCode>
-      <ErrorMessage>{message}</ErrorMessage>
-      <ErrorDescription>
+      <ErrorCode data-testid='error-code'>{errorCode}</ErrorCode>
+      <ErrorMessage data-testid='error-message'>{message}</ErrorMessage>
+      <ErrorDescription data-testid='error-description'>
         Oops! The page you&rsquo;re looking for doesn&apos;t exist or might have been moved. Please
         check the URL or return to the homepage.
       </ErrorDescription>
-      <Button onClick={() => navigate('/main')}>Go to Homepage</Button>
+      <Button data-testid='home-button' onClick={() => navigate('/main')}>Go to Homepage</Button>
     </ErrorContainer>
   );
 };

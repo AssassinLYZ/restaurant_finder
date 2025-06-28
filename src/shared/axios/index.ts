@@ -6,7 +6,7 @@ export interface HttpResponse<T> {
   message: string;
 }
 
-let BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
+let BASE_URL = '/api';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -18,7 +18,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    let token;
+    if (localStorage) token = localStorage?.getItem('accessToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -34,7 +35,8 @@ axiosInstance.interceptors.response.use(
 
 export const http = {
   get<T>(url: string, config?: AxiosRequestConfig): Promise<HttpResponse<T>> {
-    return axiosInstance.get<T>(url, config).then((res) => handleResponse<T>(res));
+    console.log(123)
+    return axiosInstance.get<T>(url, config).then((res) => {console.log(res, 123214);return handleResponse<T>(res)});
   },
 
   post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<HttpResponse<T>> {
@@ -55,6 +57,7 @@ export const http = {
 };
 
 function handleResponse<T>(response: AxiosResponse<T>): HttpResponse<T> {
+
   return {
     data: response.data,
     status: response.status,

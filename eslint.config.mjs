@@ -56,7 +56,7 @@ export default [
   reactRecommended,
   prettierConfig,
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.test.ts', '**/*.test.tsx','**/*.spec.ts'],
     languageOptions: {
       parser: tsParser,
       globals: {
@@ -83,5 +83,14 @@ export default [
         version: 'detect'
       }
     }
-  }
+  },
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
 ];
