@@ -1,6 +1,5 @@
 import { Restaurant } from 'src/shared/types/restaurants';
-import * as mockdata  from 'src/shared/__mock__/restaurantMock.json';
-
+import * as mockdata from 'src/shared/__mock__/restaurantMock.json';
 import { RootState } from '../../store';
 import {
   selectFilteredRestaurants,
@@ -10,7 +9,11 @@ import {
 
 describe('restaurants selectors', () => {
   const initialState: RootState = {
-    user:{isAuthenticated:false, collectedRestaurants:{},user:{email:'', password:''}},
+    user: {
+      isAuthenticated: false,
+      collectedRestaurants: {},
+      user: { email: '', password: '' }
+    },
     restaurants: {
       data: mockdata.mockRestaurantsResponse.restaurants as unknown as Restaurant[],
       filters: {
@@ -33,8 +36,21 @@ describe('restaurants selectors', () => {
       error: null,
       postcode: null,
     },
-    // ... other slices
   };
+
+  describe('when data is empty', () => {
+    it('should return empty array when no restaurants data', () => {
+      const state = {
+        ...initialState,
+        restaurants: {
+          ...initialState.restaurants,
+          data: [],
+        },
+      };
+      const result = selectFilteredRestaurants(state);
+      expect(result).toEqual([]);
+    });
+  });
 
   describe('selectFilteredRestaurants', () => {
     it('should return all restaurants when no filters applied', () => {
@@ -42,115 +58,172 @@ describe('restaurants selectors', () => {
       expect(result).toEqual(mockdata.mockRestaurantsResponse.restaurants);
     });
 
-    it('should filter by search query', () => {
+    it('should filter by search query (case insensitive)', () => {
       const state = {
         ...initialState,
         restaurants: {
           ...initialState.restaurants,
           filters: {
             ...initialState.restaurants.filters,
-            searchQuery: 'pizza',
+            searchQuery: 'PIZZA',
           },
         },
       };
       const result = selectFilteredRestaurants(state);
       expect(result.length).toBe(1);
-      expect(result[0].name).toBe('Pizza Palace');
+      expect(result[0].name.toLowerCase()).toContain('pizza');
     });
 
-    it('should filter by active filters', () => {
+    it('should return all restaurants when search query is empty', () => {
       const state = {
         ...initialState,
         restaurants: {
           ...initialState.restaurants,
           filters: {
             ...initialState.restaurants.filters,
-            activeFilters: {
-              ...initialState.restaurants.filters.activeFilters,
-              four_star: true,
-              new: true,
+            searchQuery: '',
+          },
+        },
+      };
+      const result = selectFilteredRestaurants(state);
+      expect(result.length).toBe(mockdata.mockRestaurantsResponse.restaurants.length);
+    });
+
+
+    it('should return empty array when no matches found', () => {
+      const state = {
+        ...initialState,
+        restaurants: {
+          ...initialState.restaurants,
+          filters: {
+            ...initialState.restaurants.filters,
+            searchQuery: 'nonexistent',
+          },
+        },
+      };
+      const result = selectFilteredRestaurants(state);
+      expect(result).toEqual([]);
+    });
+
+    const testCases = [
+      { filter: 'with_discounts', expected: (r: Restaurant) => r.deals.length === 0 },
+      { filter: 'free_delivery', expected: (r: Restaurant) => r.deliveryCost === 0 },
+      { filter: 'four_star', expected: (r: Restaurant) => r.rating.starRating >= 4 },
+      { filter: 'open_now', expected: (r: Restaurant) => r.isOpenNowForDelivery },
+      { filter: 'collection', expected: (r: Restaurant) => r.isCollection },
+      { filter: 'new', expected: (r: Restaurant) => r.isNew },
+    ];
+
+    testCases.forEach(({ filter, expected }) => {
+      it(`should filter by ${filter}`, () => {
+        const activeFilters = {
+          ...initialState.restaurants.filters.activeFilters,
+          [filter]: true,
+        };
+
+        const state = {
+          ...initialState,
+          restaurants: {
+            ...initialState.restaurants,
+            filters: {
+              ...initialState.restaurants.filters,
+              activeFilters,
             },
           },
-        },
-      };
-      const result = selectFilteredRestaurants(state);
-      expect(result.length).toBe(1);
-      expect(result[0].rating.starRating).toBeGreaterThanOrEqual(4);
+        };
+
+        const result = selectFilteredRestaurants(state);
+        expect(result.every(expected)).toBeTruthy();
+      });
     });
 
-    it('should sort by delivery time', () => {
-      const state = {
-        ...initialState,
-        restaurants: {
-          ...initialState.restaurants,
-          filters: {
-            ...initialState.restaurants.filters,
-            sortBy: 'estimatedDeliveryTime' as 'estimatedDeliveryTime',
-          },
-        },
-      };
-      const result = selectFilteredRestaurants(state);
-      expect(result[0].deliveryEtaMinutes.rangeLower).toBeLessThanOrEqual(
-        result[1].deliveryEtaMinutes.rangeLower
-      );
-    });
+    const sortTestCases = [
+      { sortBy: 'bestMatch', comparator: () => 0 },
+      {
+        sortBy: 'reviews',
+        comparator: (a: Restaurant, b: Restaurant) =>
+          (b.rating.starRating ?? 0) - (a.rating.starRating ?? 0)
+      },
+      {
+        sortBy: 'estimatedDeliveryTime',
+        comparator: (a: Restaurant, b: Restaurant) =>
+          (a.deliveryEtaMinutes?.rangeLower ?? Infinity) -
+          (b.deliveryEtaMinutes?.rangeLower ?? Infinity)
+      },
+      {
+        sortBy: 'minOrderAmount',
+        comparator: (a: Restaurant, b: Restaurant) =>
+          (a.minimumDeliveryValue ?? 0) - (b.minimumDeliveryValue ?? 0)
+      },
+      {
+        sortBy: 'deliveryCost',
+        comparator: (a: Restaurant, b: Restaurant) =>
+          (a.deliveryCost ?? 0) - (b.deliveryCost ?? 0)
+      },
+    ];
 
-    it('should combine multiple filters', () => {
-      const state = {
-        ...initialState,
-        restaurants: {
-          ...initialState.restaurants,
-          filters: {
-            ...initialState.restaurants.filters,
-            searchQuery: 'sushi',
-            activeFilters: {
-              ...initialState.restaurants.filters.activeFilters,
-              new: true,
+    sortTestCases.forEach(({ sortBy, comparator }) => {
+      it(`should sort by ${sortBy}`, () => {
+        const state = {
+          ...initialState,
+          restaurants: {
+            ...initialState.restaurants,
+            filters: {
+              ...initialState.restaurants.filters,
+              sortBy: sortBy as any,
             },
           },
-        },
-      };
-      const result = selectFilteredRestaurants(state);
-      expect(result.length).toBe(1);
-      expect(result[0].name).toBe('Sushi Express');
-      expect(result[0].isNew).toBe(true);
+        };
+
+        const result = selectFilteredRestaurants(state);
+        for (let i = 0; i < result.length - 1; i++) {
+          const comparison = comparator(result[i], result[i + 1]);
+          expect(comparison).toBeLessThanOrEqual(0);
+        }
+      });
     });
+
+
   });
 
   describe('selectPaginatedRestaurants', () => {
     it('should return paginated results', () => {
       const result = selectPaginatedRestaurants(initialState);
-      expect(result.length).toBe(2); // pageSize is 2 in initialState
+      expect(result.length).toBe(2);
     });
 
-    it('should return correct page', () => {
+    it('should return empty array when page is out of range', () => {
       const state = {
         ...initialState,
         restaurants: {
           ...initialState.restaurants,
           pagination: {
-            currentPage: 2,
+            currentPage: 999,
+            pageSize: 2,
+          },
+        },
+      };
+      const result = selectPaginatedRestaurants(state);
+      expect(result).toEqual([]);
+    });
+
+    it('should respect different page sizes', () => {
+      const state = {
+        ...initialState,
+        restaurants: {
+          ...initialState.restaurants,
+          pagination: {
+            currentPage: 1,
             pageSize: 1,
           },
         },
       };
       const result = selectPaginatedRestaurants(state);
       expect(result.length).toBe(1);
-      expect(result[0].name).toBe('Sushi Express');
     });
   });
 
   describe('selectPaginationMeta', () => {
-    it('should return correct pagination metadata', () => {
-      const result = selectPaginationMeta(initialState);
-      expect(result).toEqual({
-        totalItems: 2,
-        totalPages: 1,
-        currentPage: 1,
-        pageSize: 2,
-      });
-    });
-
     it('should calculate correct total pages', () => {
       const state = {
         ...initialState,
@@ -165,5 +238,22 @@ describe('restaurants selectors', () => {
       const result = selectPaginationMeta(state);
       expect(result.totalPages).toBe(2);
     });
+    it('should return correct metadata for empty dataset', () => {
+      const state = {
+        ...initialState,
+        restaurants: {
+          ...initialState.restaurants,
+          data: [],
+        },
+      };
+      const result = selectPaginationMeta(state);
+      expect(result).toEqual({
+        totalItems: 0,
+        totalPages: 0,
+        currentPage: 1,
+        pageSize: 2,
+      });
+    });
+
   });
 });

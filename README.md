@@ -1,74 +1,140 @@
-# This is the frontend for Takeaway assignment
+# 🍽️ Restaurant Finder
 
-🍽️ Restaurant Finder - React Application
-A  restaurant discovery app built with:
+A modern restaurant discovery application built with React for the Takeaway assignment.
 
-⭐ React 19 with TypeScript strict typing
+![App Preview](./screenshots/listpage.png)
 
-⭐ Redux Toolkit & Redux-Saga for state management
+## ✨ Features
 
-⭐ Vite for fast development and production builds
+- ⚛️ React 19 with TypeScript strict typing
+- 🧠 Redux Toolkit & Redux-Saga for state management
+- ⚡ Vite-powered fast development experience
+- 🧪 Comprehensive test suite (Jest + Playwright)
+- 🛠️ Code quality tools (ESLint + Prettier)
+- 🐳 Docker containerization with multi-stage builds
+- 📱 Fully responsive design
+- 🔄 Robust API error handling and loading states
 
-⭐ Jest (unit) + Playwright (E2E) for testing
+## 🚀 Getting Started
 
-⭐ ESLint, Prettier for code quality
+### Prerequisites
 
-⭐ Docker containerization with multi-stage builds
+- Node.js v18+
+- npm v9+
+- Docker (optional)
 
-⭐ Responsive design
+### Installation
 
-⭐ API error handling and loading states
+```bash
+# Clone repository
+git clone https://github.com/AssassinLYZ/restaurant_finder.git
+cd restaurant-finder
 
-🚀 Quick Start
-
-````bash
-
-# 1. Install dependencies
+# Install dependencies
 npm install
 
-# 2. Start development server
+# Start development server
 npm run dev
 
-# 3. Run tests
-npm test          # Unit tests
-npm run e2e       # End-to-end tests
+```
 
-# 4. Build for production
-npm run build
-
-# 5. Preview production build
-npm run preview
-
-````
 
 🌐 API Integration
-The app integrates with the Justeat API to fetch restaurant data.
+The application integrates with the Justeat API:
 
 Development Mode
-Uses Vite proxy in vite.config.ts
+Configured in vite.config.ts
 
-Routes /api/* to the restaurant API
+Proxies /api/* requests to Justeat API
 
-Handles CORS automatically
+Automatic CORS handling
 
 Production Mode
-
-
-# Create .env file
-
+```bash
+# Copy environment file
 cp .env.example .env
 
-# Add your API key
+# Add your API keys
+VITE_APP_GOOGLE_MAPS_API_KEY=your_key_here
 
-VITE_APP_GOOGLE_MAPS_API_KEY=your_api_key_here
+```
 
 🧪 Testing
 Unit Tests
-bash
+
+``` bash
 npm test          # Run all tests
 npm test:watch    # Watch mode
 npm test:coverage # Generate coverage report
-E2E Tests
-bash
-npm run e2e       # Run against dev server
+```
 
+E2E Tests
+
+``` bash
+npm run e2e       # Run against dev server
+npm run e2e:ci    # UI mode execution
+```
+
+🏗️ Build & Deployment
+Build Commands
+``` bash
+npm run build     # Create production build
+npm run preview   # Preview production build
+```
+
+Docker Deployment
+
+``` bash
+# Build image
+docker build -t restaurant-finder .
+
+# Run container
+docker run -d -p 3000:80 --name restaurant-app restaurant-finder
+```
+
+
+### Key Directories Explained:
+
+1. **`pages/`**  
+   Contains all route-level components organized by page:
+   - `collection/`: For saved/favorite restaurants
+   - `errorPage/`: Error boundary components
+   - `main/`: Homepage/search functionality
+   - `restaurant/`: Restaurant detail views
+
+2. **`shared/`**  
+   Houses all application infrastructure code:
+   - `api/`: API service layer
+   - `store/`: Redux store configuration
+   - `components/`: Reusable presentational components
+   - `theme/`: Styled-components or CSS-in-JS theming
+
+3. **Configuration Files**:
+   - `main.tsx`: ReactDOM render entry
+   - `vite-env.d.ts`: TypeScript type augmentation
+   - `setupTests.ts`: Jest/Testing Library config
+
+This structure follows best practices for:
+- Clear separation of concerns
+- Scalable feature organization
+- Reusable shared components
+- Type-safe configuration
+
+
+🛠️ Development Scripts
+
+``` bash
+npm run dev	#  Start development server
+npm run build	# reate production build
+npm run lint	# Run ESLint
+npm run format	# Format code with Prettier
+``` 
+
+
+Future improvements:
+
+- [ ] Implement real API authentication (OAuth/JWT)
+- [ ] Increase unit test coverage
+- [ ] Add Husky pre-commit hooks
+- [ ] Integrate commitlint for conventional commits
+- [ ] Setup CI/CD pipeline with GitHub Actions

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { RestaurantSearchResponse } from 'src/shared/types/restaurants';
-import * as mockRestaurantsResponse  from 'src/shared/__mock__/restaurantMock.json';
+import * as mockData from 'src/shared/__mock__/restaurantMock.json';
 
 import restaurantsReducer, {
   fetchStart,
@@ -61,11 +61,11 @@ describe('restaurants slice', () => {
     });
 
     it('should handle fetchSuccess', () => {
-      const action = fetchSuccess(mockRestaurantsResponse as unknown as  RestaurantSearchResponse);
+      const action = fetchSuccess(mockData.mockRestaurantsResponse as unknown as RestaurantSearchResponse);
       const state = restaurantsReducer({ ...initialState, loading: true }, action);
 
       expect(state.loading).toBe(false);
-      expect(state.data).toEqual((mockRestaurantsResponse as unknown as RestaurantSearchResponse).restaurants);
+      expect(state.data).toEqual((mockData.mockRestaurantsResponse as unknown as RestaurantSearchResponse).restaurants);
     });
 
     it('should handle fetchFailure', () => {

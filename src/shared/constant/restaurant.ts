@@ -3,16 +3,16 @@ export const FILTERS = [
   { id: 'free_delivery', label: 'Free Delivery' },
   { id: 'four_star', label: '4+ Stars' },
   { id: 'open_now', label: 'Open Now' },
-  { id: 'collection', label: 'Collection' },
   { id: 'new', label: 'New' },
+  { id: 'collection', label: 'Collection' },
 ] as const;
 
 export const SORT_SELECT_OPTIONS = [
-  { value: 'bestMatch', label: 'Best Match' },
-  { value: 'reviews', label: 'Rating (High to Low)' },
-  { value: 'estimatedDeliveryTime', label: 'Delivery Time' },
-  { value: 'minOrderAmount', label: 'Min Order Amount' },
-  { value: 'deliveryCost', label: 'Delivery Cost' },
+  { value: 'bestMatch', label: 'Best match' },
+  { value: 'reviews', label: 'Customer rating' },
+  { value: 'estimatedDeliveryTime', label: 'Nearest first' },
+  { value: 'minOrderAmount', label: 'Minimum order' },
+  { value: 'deliveryCost', label: 'Delivery fee' },
 ] as const;
 
 export const POSTCODE = [

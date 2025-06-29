@@ -26,11 +26,12 @@
     "useUnknownInCatchVariables": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-  },
-  "paths": {
+    "paths": {
       "src/*": ["src/*"],
       "@/*": ["src/*"]
     },
+  },
+ 
   "include": [
     "**/*.ts",
     "**/*.tsx",
