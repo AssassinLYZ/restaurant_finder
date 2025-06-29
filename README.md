@@ -109,10 +109,6 @@ docker run -d -p 3000:80 --name restaurant-app restaurant-finder
    - `components/`: Reusable presentational components
    - `theme/`: Styled-components or CSS-in-JS theming
 
-3. **Configuration Files**:
-   - `main.tsx`: ReactDOM render entry
-   - `vite-env.d.ts`: TypeScript type augmentation
-   - `setupTests.ts`: Jest/Testing Library config
 
 This structure follows best practices for:
 - Clear separation of concerns
