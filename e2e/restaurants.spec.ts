@@ -17,13 +17,13 @@ test.describe('Restaurant Page Tests', () => {
   });
 
   test(`should display another ${PAGE_SIZE} restaurants after chnange the page of the pagination`, async ({ page }) => {
-   
+
     await page.getByLabel('Go to page 2').click();
     await expect(page.locator('[data-testid="restaurant-card-19"]')).toBeVisible();
   });
 
   test('should display the correct restaurants when search title changed', async ({ page }) => {
-   
+
     await expect(page.locator('[data-testid^="restaurant-card-"]')).toHaveCount(PAGE_SIZE);
 
     await page.getByPlaceholder('Search by restrauant name ....').fill('pizza');
@@ -39,7 +39,7 @@ test.describe('Restaurant Page Tests', () => {
   });
 
   test('should display the correct restaurants when a filter is clicked', async ({ page }) => {
-   
+
     await page.click('button:has-text("Free Delivery")');
     const allRestaurants = await page.locator('[data-testid^="restaurant-card-"]').all()
     const allRestaurantsContent = await Promise.all(allRestaurants.map(item => item.innerHTML()));
@@ -50,7 +50,7 @@ test.describe('Restaurant Page Tests', () => {
   });
 
   test('should display the correct restaurants when a sorting is selected', async ({ page }) => {
-   
+
     function isDescendingOrder(values: number[] | string[]) {
       const numbers = values.map(Number);
       for (let i = 0; i < numbers.length - 1; i++) {
@@ -67,12 +67,17 @@ test.describe('Restaurant Page Tests', () => {
     expect(isDescendingOrder(allRestaurantsRating)).toBe(true);
   });
 
-  test('should display the details of a restaurant when a restaurant is clicked', async ({ page }) => {
-    
-    await page.locator('[data-testid="restaurant-card-1"]').click()
-    await page.waitForTimeout(1000)
-    const map = await page.getByTestId('restaurant-detail');
-    // await map.waitFor({ state: 'visible' });
+  test('should display restaurant details', async ({ page }) => {
+    await Promise.all([
+      page.waitForURL(/\/restaurant\/.+/), // 等待URL变化
+      page.locator('[data-testid="restaurant-card-1"]').click()
+    ]);
+
+    const map = page.getByTestId('restaurant-detail');
+    await map.waitFor({
+      state: 'visible',
+      timeout: 15000
+    });
 
     await expect(map).toBeVisible();
   });

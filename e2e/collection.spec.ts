@@ -30,19 +30,19 @@ test.describe('Main Page E2E Tests', () => {
     test('should be able to collect restaurants', async ({ page }) => {
         await page.addInitScript(() => {
             window.localStorage.setItem('accessToken', 'AUTH_TOKEN');
-          });
-   
+        });
+
         await page.goto(`${baseUrl}/restaurant/BS14DJ`);
         await page.locator('[data-testid="restaurant-card-1"]').click()
 
-        const button = page.getByRole('button', { name: 'Add to favorites' });
-        await button.waitFor({ state: 'visible' }); 
+        const button = await page.getByRole('button', { name: 'Add to favorites' });
+        await button.waitFor({ state: 'visible', timeout: 15000 });
         await button.click()
         await page.goto(`${baseUrl}/collection`);
         const buttonLogout = page.getByRole('button', { name: 'Logout' });
-        await buttonLogout.waitFor({ state: 'visible' }); 
+        await buttonLogout.waitFor({ state: 'visible', timeout: 15000 });
         const card = await page.locator('[data-testid="restaurant-card-1"]')
-        await card.waitFor({ state: 'visible' }); 
+        await card.waitFor({ state: 'visible' });
         await expect(card).toBeVisible()
 
     });
