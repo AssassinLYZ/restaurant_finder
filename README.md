@@ -37,19 +37,8 @@ npm install
 npm run dev
 
 ```
+Setup environment:
 
-
-🌐 API Integration
-The application integrates with the Justeat API:
-
-Development Mode
-Configured in vite.config.ts
-
-Proxies /api/* requests to Justeat API
-
-Automatic CORS handling
-
-Production Mode
 ```bash
 # Copy environment file
 cp .env.example .env
@@ -58,6 +47,20 @@ cp .env.example .env
 VITE_APP_GOOGLE_MAPS_API_KEY=your_key_here
 
 ```
+
+
+🌐 API Integration
+The application integrates with the Justeat API:
+
+
+Development Mode
+Configured in vite.config.ts
+
+Proxies /api/* requests to Justeat API
+
+Automatic CORS handling
+
+
 
 🧪 Testing
 Unit Tests
@@ -81,6 +84,7 @@ Build Commands
 npm run build     # Create production build
 npm run preview   # Preview production build
 ```
+## Production Mode
 
 Docker Deployment
 
