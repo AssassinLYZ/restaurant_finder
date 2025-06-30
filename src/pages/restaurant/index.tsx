@@ -20,7 +20,7 @@ import {
 import EmptyList from './emptyList';
 import FilterGroup from './filterGroup';
 import RestaurantList from './restaurantList';
-import  ErrorView  from '../../shared/components/ErrorView';
+import ErrorView from '../../shared/components/ErrorView';
 
 export default function MainPage() {
   const routerParams = useParams();
@@ -42,7 +42,15 @@ export default function MainPage() {
   };
 
   if (error) {
-    return <ErrorView error={error} onAction={() => { }} action="Home Page" />;
+    return (
+      <ErrorView
+        error={error}
+        onAction={() => {
+          navigate('/main');
+        }}
+        action="Home Page"
+      />
+    );
   }
 
   return (
@@ -52,7 +60,13 @@ export default function MainPage() {
       <Title>{filteredRestaurants.length} Restaurants in total </Title>
       {loading && <Loading fullScreen />}
 
-      {!loading && <RestaurantList restaurants={paginatedRestaurants} pageSize={pagination.pageSize} currentPage={pagination.currentPage}/>}
+      {!loading && (
+        <RestaurantList
+          restaurants={paginatedRestaurants}
+          pageSize={pagination.pageSize}
+          currentPage={pagination.currentPage}
+        />
+      )}
 
       {!loading && data.length !== 0 && filteredRestaurants.length === 0 && (
         <EmptyList
